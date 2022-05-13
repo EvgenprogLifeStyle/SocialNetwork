@@ -1,0 +1,29 @@
+.header {
+  grid-area: header;
+  background-color: #333336;
+  padding: 20px;
+
+  //.header__contain
+  &__contain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  img {
+    max-width: 36px;
+  }
+
+  //.header__login
+  &__login {
+    color: #cecece;
+    text-decoration: none;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: yellow;
+    }
+
+  }
+}
