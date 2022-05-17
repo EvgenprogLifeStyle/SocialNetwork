@@ -1,5 +1,6 @@
 import React from "react";
 import s from './ProfileInfo.module.scss'
+import defaultAvatar from './../../../assets/img/avatar_default.png'
 
 function ProfileInfo(props) {
     let item = props.profile
@@ -12,7 +13,7 @@ function ProfileInfo(props) {
                         {item.photos.large
                             ? <img src={item.photos.large} alt=""/>
                             : <img
-                                src="https://cdn0.iconfinder.com/data/icons/e-commerce-135/48/74_user-avatar-profile-personal-account-512.png"/>
+                                src={defaultAvatar}/>
                         }
                     </div>
                     {/*<div className={s.profile__btn}>un</div>*/}

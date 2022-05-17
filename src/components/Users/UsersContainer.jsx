@@ -1,46 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {
-    follow,
-    setCurrentPage,
-    setTotalUserCount,
-    setUsers, toggleInProgress,
-    toggleIsFetching,
-    unFollow
-} from "../../Redux/UsersReducer";
+import {follow, getUsers, setCurrentPage, setFollow, setUnFollow} from "../../Redux/UsersReducer";
 
 import Users from "./Users";
 import Loader from "../Loader/Loader";
-import {getUsersApi} from "../../Api/api";
-
 
 
 function UsersContainerApi(props) {
 
-    function getUsers() {
-
-        if (props.state.length === 0) {
-            props.toggleIsFetching(true)
-            getUsersApi(props.currentPage, props.pageSize)
-                .then(data => {
-                    props.setTotalUserCount(data.totalCount)
-                    props.setUsers(data.items)
-                    props.toggleIsFetching(false)
-                })
-
-        }
-    }
-
-    getUsers()
+    useEffect(() => {
+        props.getUsers(props.currentPage, props.pageSize)
+    }, []);
 
     const onPageChange = (el) => {
         props.setCurrentPage(el)
-        props.toggleIsFetching(true)
-        getUsersApi(el, props.pageSize)
-            .then(data => {
-                props.setUsers(data.items)
-                props.toggleIsFetching(false)
-            })
+        props.getUsers(el, props.pageSize)
     }
     return <>
 
@@ -50,10 +24,10 @@ function UsersContainerApi(props) {
                onPageChange={onPageChange}
                state={props.state}
                followAC={props.follow}
-               unFollowAC={props.unFollow}
                currentPage={props.currentPage}
-               toggleInProgress={props.toggleInProgress}
                inProgress={props.inProgress}
+               setUnFollow={props.setUnFollow}
+               setFollow={props.setFollow}
         />
     </>;
 }
@@ -77,11 +51,9 @@ let mapStateToProps = (state) => {
 const UsersContainer = connect(mapStateToProps, {
     // followAC: (id) => dispatch(followAC(id)),
     follow,
-    unFollow,
-    setUsers,
     setCurrentPage,
-    setTotalUserCount,
-    toggleIsFetching,
-    toggleInProgress
+    getUsers,
+    setUnFollow,
+    setFollow
 })(UsersContainerApi)
 export default UsersContainer;

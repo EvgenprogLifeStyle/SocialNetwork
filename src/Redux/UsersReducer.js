@@ -1,3 +1,5 @@
+import {profile, usersApi} from "../Api/api";
+
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
@@ -9,7 +11,7 @@ const IN_PROGRESS = 'IN_PROGRESS'
 
 const defaultState = {
     users: [], // список пользователей
-    pageSize: 6, // количество пользователей на странице
+    pageSize: 10, // количество пользователей на странице
     totalUserCount: 0,
     currentPage: 1, // отображаемая страница по умолчанию
     isFetching: true, // лоадер
@@ -115,10 +117,53 @@ export const unFollow = (userID) => ({type: UNFOLLOW, userID})
 export const setUsers = (users) => ({type: SET_USERS, users})
 export const setCurrentPage = (pages) => ({type: SET_CURRENT_PAGE, pages})
 export const setTotalUserCount = (users) => ({type: SET_TOTAL_USER_COUNT, users})
-export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING,isFetching})
+export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 export const setUserProfile = (userId) => ({type: SET_USER_PROFILE, userId})
 export const toggleInProgress = (result) => ({type: IN_PROGRESS, result})
 
+export const getUsers = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetching(true))
+        usersApi.getUsers(currentPage, pageSize).then(data => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUserCount(data.totalCount))
+            })
+    }
+}
+
+export const setUnFollow = (id) => {
+    return (dispatch) => {
+        dispatch(toggleInProgress(true))
+        return usersApi.deleteUsersFollow(id)
+            .then(data => {
+                if (data.resultCode === 0) dispatch(follow(id))
+                dispatch(toggleInProgress(false))
+            })
+    }
+}
+export const setFollow = (id) => {
+    return (dispatch) => {
+        dispatch(toggleInProgress(true))
+        return usersApi.postUsers(id)
+            .then(data => {
+                if (data.resultCode === 0) dispatch(unFollow(id))
+                dispatch(toggleInProgress(false))
+            })
+    }
+}
+
+
+export const setUserData = (userId) => (dispatch) => {
+    dispatch(toggleIsFetching(true))
+
+    profile.dataUser(userId)
+        .then(data => {
+            dispatch(setUserProfile(data))
+            dispatch(toggleIsFetching(false))
+        })
+
+}
 
 export default userReducer

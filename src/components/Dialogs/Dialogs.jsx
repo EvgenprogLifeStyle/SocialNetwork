@@ -3,12 +3,13 @@ import s from './Dialogs.module.scss'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import imgSend from './../../send.svg'
+import {Navigate} from "react-router-dom";
 
 
 function Dialogs(props) {
-
+    console.log(props)
     // let newMessage = useSelector(state=> state.dataDialogs.newMessage)
-     let newMessage = props.state.newMessage
+    let newMessage = props.state.newMessage
 
     const sendMessage = () => {
         props.onSendMessageClick()
@@ -17,12 +18,15 @@ function Dialogs(props) {
         let text = e.target.value
         props.onNewMessageChange(text)
     }
-    function dT( ) {
+
+    function dT() {
         const date = new Date();
         const hours = "0" + date.getHours();
         const minutes = "0" + date.getMinutes();
         return hours.substr(-2) + ":" + minutes.substr(-2);
     }
+
+    if (!props.isAuth) return <Navigate replace to="/login"/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogs__items}>

@@ -1,9 +1,7 @@
 import React from 'react';
 import s from './Users.module.scss'
-import defaultAvatar from './../../assets/img/avatar_default.jpg'
-import {Link, NavLink} from "react-router-dom";
-import axios from "axios";
-import {toggleInProgress} from "../../Redux/UsersReducer";
+import defaultAvatar from './../../assets/img/avatar_default.png'
+import {Link} from "react-router-dom";
 
 function Users(props) {
 
@@ -38,40 +36,9 @@ function Users(props) {
                             <div className={s.users__status}>{user.status}</div>
                             {/*<div className={s.users__location}>{user.location.country},{user.location.city}</div>*/}
                             {user.followed === true
-                                ? <button disabled={props.inProgress} onClick={() => {
-                                    console.log(props.inProgress)
-                                    props.toggleInProgress(true)
-                                    return axios
-                                        .delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                                            {
-                                                withCredentials: true,
-                                                headers: {
-                                                    "API-KEY": '49bc418b-fd7c-4c82-b5f5-ce56b5a10082'
-                                                }
-                                            })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) props.followAC(user.id)
-                                            props.toggleInProgress(false)
-                                        })
-
-                                }
-                                }
+                                ? <button disabled={props.inProgress} onClick={() => props.setUnFollow(user.id)}
                                           className="btn btn__full">unfollowed</button>
-                                : <button disabled={props.inProgress} onClick={() => {
-                                    props.toggleInProgress(true)
-                                    return axios
-                                        .post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                                            withCredentials: true,
-                                            headers: {
-                                                "API-KEY": '49bc418b-fd7c-4c82-b5f5-ce56b5a10082'
-                                            }
-                                        })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) props.unFollowAC(user.id)
-                                            props.toggleInProgress(false)
-                                        })
-                                }
-                                }
+                                : <button disabled={props.inProgress} onClick={() => props.setFollow(user.id)}
                                           className="btn btn__full">followed</button>
                             }
                         </div>

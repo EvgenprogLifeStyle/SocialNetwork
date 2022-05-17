@@ -1,3 +1,5 @@
+import {profile} from "../Api/api";
+
 const ADD_POST = "ADD_POST"
 const UDATE_POST = "UDATE_POST"
 
@@ -40,5 +42,7 @@ const profileReducer = (state = defaultState, action) => {
 
 export const addPostActionCreator = () => ({type: ADD_POST})
 export const updatePostActionCreator = (data) => ({type: UDATE_POST, payload: data})
+
+
 
 export default profileReducer
