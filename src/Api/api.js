@@ -20,8 +20,9 @@ export const usersApi = {
 }
 
 export const headerApi = {
-    login: () => instance.get(`auth/me`)
-        .then(response => response.data)
+    me: () => instance.get(`auth/me`),
+    login: (email, password, rememberMe) => instance.post(`auth/login`, {email, password, rememberMe}),
+    logout: () => instance.delete(`auth/login`)
 
 
 }
@@ -29,7 +30,13 @@ export const headerApi = {
 export const profile = {
     dataUser: (userId) =>
         instance.get(`profile/${userId}`)
-            .then(response => response.data)
+            .then(response => response.data),
+    getStatus: (userId) =>
+        instance.get(`profile/status/${userId}`),
+
+    updateStatus: (status) =>
+        instance.put(`profile/status`, {status})
+
 }
 // export const getFollowApi = (id) =>
 //     instance.pos(`/follow/${id}`)

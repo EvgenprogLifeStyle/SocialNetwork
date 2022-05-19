@@ -9,13 +9,14 @@ const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const IN_PROGRESS = 'IN_PROGRESS'
 
+
+
 const defaultState = {
     users: [], // список пользователей
     pageSize: 10, // количество пользователей на странице
     totalUserCount: 0,
     currentPage: 1, // отображаемая страница по умолчанию
     isFetching: true, // лоадер
-    profile: null,
     inProgress: false
     /*  {
           id: 1,
@@ -100,7 +101,7 @@ const userReducer = (state = defaultState, action) => {
             }
         }
         case IN_PROGRESS: {
-            console.log(action.result)
+            // console.log(action.result)
             return {
                 ...state,
                 inProgress: action.result
@@ -119,7 +120,6 @@ export const setCurrentPage = (pages) => ({type: SET_CURRENT_PAGE, pages})
 export const setTotalUserCount = (users) => ({type: SET_TOTAL_USER_COUNT, users})
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
-export const setUserProfile = (userId) => ({type: SET_USER_PROFILE, userId})
 export const toggleInProgress = (result) => ({type: IN_PROGRESS, result})
 
 export const getUsers = (currentPage, pageSize) => {
@@ -155,15 +155,6 @@ export const setFollow = (id) => {
 }
 
 
-export const setUserData = (userId) => (dispatch) => {
-    dispatch(toggleIsFetching(true))
 
-    profile.dataUser(userId)
-        .then(data => {
-            dispatch(setUserProfile(data))
-            dispatch(toggleIsFetching(false))
-        })
-
-}
 
 export default userReducer

@@ -1,29 +1,31 @@
 import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {setUserData} from "../../Redux/UsersReducer";
+import {getStatus, setUserData, setUserProfileData, updateStatus} from "../../Redux/ProfileReducer";
 import Loader from "../Loader/Loader";
-import {Navigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {WithAuthRedirect} from "../../Hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 function ProfileContainer(props) {
     const params = useParams();
     if (!params.userId) params.userId = 23962
+    // if (!params.userId) params.userId = 2
 
-    useEffect(() => props.setUserData(params.userId), []);
-    if(!props.isAuth) return <Navigate replace to="/login" />
+    useEffect(() => {
+        props.setUserData(params.userId)
+        props.getStatus(params.userId)
+
+    }, []);
+
     return <>
-        {props.state !== null ? <Profile {...props} profile={props.state}/> : <Loader/>}
+        {props.state !== null ? <Profile  profile={props.state} status={props.status} updateStatus={props.updateStatus}/> : <Loader/>}
     </>
 }
 
-let mapStateToProps = (state) => {
-    return (
-        {
-            state: state.dataUsers.profile,
-            isAuth: state.auth.isAuth
-        }
-    )
-}
+let mapStateToProps = (state) => ({state: state.dataProfile.profile, status: state.dataProfile.status})
 
-
-export default connect(mapStateToProps, {setUserData})(ProfileContainer);
+export default compose(
+    connect(mapStateToProps, {setUserData, getStatus, updateStatus}),
+    WithAuthRedirect
+)(ProfileContainer)

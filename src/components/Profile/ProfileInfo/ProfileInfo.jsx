@@ -1,6 +1,7 @@
 import React from "react";
 import s from './ProfileInfo.module.scss'
 import defaultAvatar from './../../../assets/img/avatar_default.png'
+import Status from "./Status/Status";
 
 function ProfileInfo(props) {
     let item = props.profile
@@ -20,7 +21,8 @@ function ProfileInfo(props) {
                 </div>
                 <div className={s.profile__right}>
                     <div className={s.profile__name}>{item.fullName}</div>
-                    <div className={s.profile__status}>{item.aboutMe}</div>
+                    <Status className={s.profile__status} text={props.status} updateStatus={props.updateStatus}/>
+                    {/*<div className={s.profile__status}>{item.aboutMe}</div>*/}
                     <div className={s.profile__about}>{item.lookingForAJobDescription}</div>
                 </div>
             </div>

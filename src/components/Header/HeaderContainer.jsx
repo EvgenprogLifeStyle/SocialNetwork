@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
-import {setLogin} from "../../Redux/AuthReducer";
+import {logout, setLogin} from "../../Redux/AuthReducer";
 
 function HeaderContainer(props) {
-    useEffect(() => props.setLogin(), []);
+    useEffect(() => {props.setLogin()}, []);
     return <Header {...props} />
 }
 
@@ -15,4 +15,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {setLogin})(HeaderContainer);
+export default connect(mapStateToProps, {setLogin, logout})(HeaderContainer);

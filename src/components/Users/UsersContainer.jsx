@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {follow, getUsers, setCurrentPage, setFollow, setUnFollow} from "../../Redux/UsersReducer";
+import {follow, getUsers, setCurrentPage, setFollow, setUnFollow, setUserData} from "../../Redux/UsersReducer";
 
 import Users from "./Users";
 import Loader from "../Loader/Loader";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../Hoc/WithAuthRedirect";
 
 
 function UsersContainerApi(props) {
@@ -48,12 +50,14 @@ let mapStateToProps = (state) => {
 }
 
 
-const UsersContainer = connect(mapStateToProps, {
-    // followAC: (id) => dispatch(followAC(id)),
-    follow,
-    setCurrentPage,
-    getUsers,
-    setUnFollow,
-    setFollow
-})(UsersContainerApi)
-export default UsersContainer;
+export default compose(
+    connect(mapStateToProps, {
+        // followAC: (id) => dispatch(followAC(id)),
+        follow,
+        setCurrentPage,
+        getUsers,
+        setUnFollow,
+        setFollow
+    }),
+    WithAuthRedirect
+)(UsersContainerApi)

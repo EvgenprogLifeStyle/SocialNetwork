@@ -1,5 +1,5 @@
 const SEND_NEW_MESSAGE = "SEND_NEW_MESSAGE"
-const UPDATE_NEW_MESSAGE = "UPDATE_NEW_MESSAGE"
+
 
 const defaultState = {
     dialogs: [
@@ -9,8 +9,7 @@ const defaultState = {
     message: [
         {id: 1, name: 'Аноним', text: 'Привет'},
         {id: 2, name: 'Аноним', text: "Как дела?"}
-    ],
-    newMessage: ''
+    ]
 }
 
 
@@ -22,24 +21,18 @@ const dialogReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 newMessage: '',
-                message: [...state.message, {id: Date.now(), name: 'Аноним', text: textMessage}]
+                message: [...state.message, {id: Date.now(), name: 'Аноним', text: action.message}]
             }
 
 
-        case UPDATE_NEW_MESSAGE:
-            return (
-                {
-                    ...state,
-                    newMessage: action.payload
-                }
-            )
+
         default:
             return state
     }
 }
 
-export const addMessageCreator = () => ({type: SEND_NEW_MESSAGE})
-export const updateMessageCreator = (data) => ({type: UPDATE_NEW_MESSAGE, payload: data})
+export const addMessageCreator = (message) => ({type: SEND_NEW_MESSAGE,message})
+
 
 
 export default dialogReducer

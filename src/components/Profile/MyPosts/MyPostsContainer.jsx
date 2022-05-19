@@ -3,39 +3,17 @@ import {addPostActionCreator, updatePostActionCreator} from "../../../Redux/Prof
 import {connect} from "react-redux";
 import MyPosts from "./MyPosts";
 
-
-// function MyPostsContainer() {
-//     const dispatch = useDispatch()
-//     const state = useSelector(state => state.dataProfile)
-//
-//     let newPostChange = state.newPost
-//
-//     let updateNewPostText = (e) => {
-//         let text = e.target.value
-//         dispatch(updatePostActionCreator(text))
-//     }
-//
-//     let addPost = () => dispatch(addPostActionCreator())
-//
-//     return (
-//         <MyPosts
-//             updateNewPostText={updateNewPostText}
-//             addPost={addPost}
-//             state={state}
-//             newPostChange={newPostChange}/>
-//     )
-// }
-
 let mapPostToProps = (state) => ({state: state.dataProfile})
+
 let dispatchPostToProps = (dispatch) => {
     return (
         {
-            updateNewPostText: (text) => dispatch(updatePostActionCreator(text)),
-            addPost: () => dispatch(addPostActionCreator())
+
+            addPost: (post) => dispatch(addPostActionCreator(post))
         }
 
     )
 }
-const MyPostsContainer = connect(mapPostToProps,dispatchPostToProps)(MyPosts)
+const MyPostsContainer = connect(mapPostToProps, dispatchPostToProps)(MyPosts)
 
 export default MyPostsContainer;
