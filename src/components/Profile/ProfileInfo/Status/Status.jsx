@@ -1,43 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './Status.module.scss'
 
 const Status = (props) => {
 
-    let state = {editMode: false, text: props.text}
-    const [isDataState, setIsDataState] = useState({})
+    const [editMode, setEditMode] = useState(false)
+    const [status, setStatus] = useState(props.text)
 
-    const activateEditMode = () => {
-        setIsDataState({
-            ...state, editMode: true
-        })
-    }
+    useEffect(() => {
+        setStatus(props.text)
+    }, [props.text])
+
+    const activateEditMode = () => setEditMode(true)
 
     const deactivateEditMode = () => {
-        setIsDataState({
-            ...state, editMode: false
-        })
-        props.updateStatus(isDataState.text)
+        setEditMode(false)
+        props.updateStatus(status)
     }
 
-    const onChangeStatus = (e) => {
-        setIsDataState({
-            ...state,
-            editMode: true,
-            text: e.target.value
-        })
-    }
+    const onChangeStatus = (e) => setStatus(e.target.value)
 
     return (
         <>
-            {!isDataState.editMode
+            {!editMode
                 ?
                 <div onDoubleClick={activateEditMode} className={s.text}>
-                    {props.text || 'Нет статуса!'}
+                    {status || 'Нет статуса!'}
                 </div>
                 :
                 <div className={s.input}>
                     <input onBlur={deactivateEditMode} onChange={onChangeStatus} autoFocus={true} type="text"
-                           value={isDataState.text}/>
+                           value={status}/>
                 </div>
             }
         </>

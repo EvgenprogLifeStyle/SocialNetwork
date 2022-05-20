@@ -59,26 +59,3 @@
 
 }
 
-.pagination {
-  display: flex;
-  //flex-wrap: wrap;
-  margin: 10px;
-
-  span {
-    padding: 0px 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover{
-      opacity: 0.6;
-    }
-
-  }
-
-  .active_page {
-    color: yellow;
-    &:hover{
-      opacity: 1;
-    }
-  }
-}

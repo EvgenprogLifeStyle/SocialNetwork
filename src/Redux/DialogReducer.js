@@ -1,6 +1,5 @@
 const SEND_NEW_MESSAGE = "SEND_NEW_MESSAGE"
 
-
 const defaultState = {
     dialogs: [
         {id: 1, name: 'Катя'},
@@ -12,27 +11,20 @@ const defaultState = {
     ]
 }
 
-
 const dialogReducer = (state = defaultState, action) => {
 
     switch (action.type) {
         case SEND_NEW_MESSAGE:
-            let textMessage = state.newMessage
             return {
                 ...state,
                 newMessage: '',
                 message: [...state.message, {id: Date.now(), name: 'Аноним', text: action.message}]
             }
-
-
-
         default:
             return state
     }
 }
 
 export const addMessageCreator = (message) => ({type: SEND_NEW_MESSAGE,message})
-
-
 
 export default dialogReducer

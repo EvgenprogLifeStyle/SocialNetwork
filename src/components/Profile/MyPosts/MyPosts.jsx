@@ -7,7 +7,10 @@ import Textarea from "../../../Ui/Textarea/Textarea";
 
 const maxLengthCreator30 = maxLengthCreator(30)
 
-function MyPosts(props) {
+const MyPosts = (props) => {
+    console.log(props)
+
+
     const onSubmitPost = (data) => props.addPost(data.post)
 
 
@@ -22,9 +25,8 @@ function MyPosts(props) {
         </div>
     );
 }
-const FormPostAdd = (props) => {
 
-    // c
+const FormPostAdd = (props) => {
 
 
     // const required = value => (value   ? undefined : 'Required')
@@ -32,7 +34,7 @@ const FormPostAdd = (props) => {
         <form onSubmit={props.handleSubmit} className={s.form}>
             <Field component={Textarea}
                    name='post'
-                   validate={[required, maxLengthCreator30 ]}
+                   validate={[required, maxLengthCreator30]}
                    placeholder="Text new post..."
                    className={s.form__control}/>
             <div className={s.form__btn}>
@@ -45,4 +47,4 @@ const FormPostAdd = (props) => {
 
 const PostReduxForm = reduxForm({form: 'post'})(FormPostAdd)
 
-export default MyPosts;
+export default React.memo(MyPosts);

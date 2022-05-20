@@ -3,8 +3,8 @@ import {profile} from "../Api/api";
 const ADD_POST = "ADD_POST"
 const TOGGLE_IS_FETCHING_PROFILE = "TOGGLE_IS_FETCHING_PROFILE"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
-
 const SET_STATUS = "SET_STATUS"
+
 const defaultState = {
     post: [
         {id: 1, text: 'Первый пост', countLike: 10},
@@ -18,8 +18,6 @@ const defaultState = {
 const profileReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ADD_POST: {
-            let newPost = state.newPost
-
             return {
                 ...state,
                 newPost: '',
@@ -63,27 +61,21 @@ export const setUserProfileData = (userId) => ({type: SET_USER_PROFILE, userId})
 export const setStatus = (text) => ({type: SET_STATUS, text})
 
 
-export const setUserData = (userId) => (dispatch) => {
+export const setUserData = (userId) => async (dispatch) => {
     dispatch(toggleIsFetchingProfile(true))
-    profile.dataUser(userId)
-        .then(data => {
-            dispatch(setUserProfileData(data))
-            dispatch(toggleIsFetchingProfile(false))
-        })
+    let data = await profile.dataUser(userId)
+    dispatch(setUserProfileData(data))
+    dispatch(toggleIsFetchingProfile(false))
 }
 
-export const getStatus = (userId) => (dispatch) => {
-
-    profile.getStatus(userId)
-        .then(response => dispatch(setStatus(response.data)))
+export const getStatus = (userId) => async (dispatch) => {
+    let response = await profile.getStatus(userId)
+    dispatch(setStatus(response.data))
 }
 
-export const updateStatus = (status) => (dispatch) => {
-    profile.updateStatus(status).then(response => {
-        if (response.data.resultCode === 0) dispatch(setStatus(status))
-
-
-    })
+export const updateStatus = (status) => async (dispatch) => {
+    let response = await profile.updateStatus(status)
+    if (response.data.resultCode === 0) dispatch(setStatus(status))
 }
 
 export default profileReducer

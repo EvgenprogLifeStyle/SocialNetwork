@@ -6,10 +6,14 @@ import Loader from "../Loader/Loader";
 import {useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../Hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {setLogin} from "../../Redux/AuthReducer";
 
 function ProfileContainer(props) {
     const params = useParams();
-    if (!params.userId) params.userId = 23962
+    if (!params.userId) params.userId = props.userId
+ 
+
+
     // if (!params.userId) params.userId = 2
 
     useEffect(() => {
@@ -23,7 +27,11 @@ function ProfileContainer(props) {
     </>
 }
 
-let mapStateToProps = (state) => ({state: state.dataProfile.profile, status: state.dataProfile.status})
+let mapStateToProps = (state) => ({
+    state: state.dataProfile.profile,
+    status: state.dataProfile.status,
+    userId: state.auth.id
+})
 
 export default compose(
     connect(mapStateToProps, {setUserData, getStatus, updateStatus}),

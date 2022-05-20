@@ -7,17 +7,11 @@ import {maxLengthCreator, required} from "../../Utils/validator";
 import {Field, reduxForm} from "redux-form";
 import Input from "../../Ui/Input/Input";
 import {Navigate} from "react-router-dom";
-import {mapStateToPropsFactory} from "react-redux/es/connect/mapStateToProps";
 
-function Login(props) {
-
-   if (props.isAuth === true) return <Navigate replace to="/profile"/>
-
-
-    const onSubmit = (data) => props.login(data.email, data.password, data.rememberMe)
-
+function Login({isAuth, login}) {
+    if (isAuth === true) return <Navigate replace to="/profile"/>
+    const onSubmit = (data) => login(data.email, data.password, data.rememberMe)
     const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
-
 
     return (
         <div className={s.wrap}>
@@ -30,9 +24,10 @@ function Login(props) {
 
 const maxLengthCreator30 = maxLengthCreator(30)
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
     return (
-        <form className={s.form} onSubmit={props.handleSubmit}>
+        <form className={s.form} onSubmit={handleSubmit}>
+            {error && <div className={s._error}>{error}</div>}
             <div className={s.form__control}>
                 <Field component={Input} type="text" name='email' placeholder="Login"
                        validate={[required, maxLengthCreator30]}/>
@@ -51,16 +46,8 @@ const LoginForm = (props) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    return (
-        {
-            isAuth: state.auth.isAuth
-        }
-    )
-}
-
+const mapStateToProps = (state) => ({isAuth: state.auth.isAuth})
 
 const LoginContainer = connect(mapStateToProps, {login, logout})(Login)
-
 
 export default LoginContainer;

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from "react-redux";
-import {follow, getUsers, setCurrentPage, setFollow, setUnFollow, setUserData} from "../../Redux/UsersReducer";
+import {follow, getUsers, setCurrentPage, setFollow, setUnFollow} from "../../Redux/UsersReducer";
 
 import Users from "./Users";
 import Loader from "../Loader/Loader";
@@ -12,15 +12,15 @@ function UsersContainerApi(props) {
 
     useEffect(() => {
         props.getUsers(props.currentPage, props.pageSize)
-    }, []);
+    }, [props.currentPage, props.pageSize]);
 
     const onPageChange = (el) => {
         props.setCurrentPage(el)
         props.getUsers(el, props.pageSize)
     }
     return <>
-
         {props.isFetching ? <Loader/> : null}
+
         <Users totalUserCount={props.totalUserCount}
                pageSize={props.pageSize}
                onPageChange={onPageChange}
@@ -34,9 +34,7 @@ function UsersContainerApi(props) {
     </>;
 }
 
-
 let mapStateToProps = (state) => {
-    // console.log(state.dataUsers)
     return (
         {
             state: state.dataUsers.users,
@@ -49,10 +47,8 @@ let mapStateToProps = (state) => {
     )
 }
 
-
 export default compose(
     connect(mapStateToProps, {
-        // followAC: (id) => dispatch(followAC(id)),
         follow,
         setCurrentPage,
         getUsers,
