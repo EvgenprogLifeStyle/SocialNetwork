@@ -1,9 +1,12 @@
 import {profile} from "../Api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "ADD_POST"
 const TOGGLE_IS_FETCHING_PROFILE = "TOGGLE_IS_FETCHING_PROFILE"
 const SET_USER_PROFILE = "SET_USER_PROFILE"
 const SET_STATUS = "SET_STATUS"
+const SAVE_PHOTO = "SAVE_PHOTO"
+const SAVE_PROFILE = "SAVE_PROFILE"
 
 const defaultState = {
     post: [
@@ -50,6 +53,18 @@ const profileReducer = (state = defaultState, action) => {
                 status: action.text
             }
         }
+        case SAVE_PHOTO: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+        }
+        case SAVE_PROFILE: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
+        }
         default:
             return state
     }
@@ -59,6 +74,8 @@ export const addPostActionCreator = (post) => ({type: ADD_POST, post})
 export const toggleIsFetchingProfile = (isFetching) => ({type: TOGGLE_IS_FETCHING_PROFILE, isFetching})
 export const setUserProfileData = (userId) => ({type: SET_USER_PROFILE, userId})
 export const setStatus = (text) => ({type: SET_STATUS, text})
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO, photos})
+export const saveProfileSuccess = (data) => ({type: SAVE_PROFILE, data})
 
 
 export const setUserData = (userId) => async (dispatch) => {
@@ -76,6 +93,25 @@ export const getStatus = (userId) => async (dispatch) => {
 export const updateStatus = (status) => async (dispatch) => {
     let response = await profile.updateStatus(status)
     if (response.data.resultCode === 0) dispatch(setStatus(status))
+}
+
+export const savePhoto = (file) => async (dispatch) => {
+    let response = await profile.savePhoto(file)
+    if (response.data.resultCode === 0) dispatch(savePhotoSuccess(response.data.data.photos))
+}
+
+export const saveProfile = (data) => async (dispatch) => {
+    // console.log(data)
+    let response = await profile.saveProfile(data)
+
+    if (response.data.resultCode === 0) {
+        dispatch(setUserData(data.userId))
+    } else {
+        console.log(response.data.messages[0])
+        // dispatch(stopSubmit('profile', {"contacts": {"facebook": response.data.messages[0]}}))
+        dispatch(stopSubmit('profile', {_error: response.data.messages[0]}))
+        return Promise.reject( response.data.messages[0])
+    }
 }
 
 export default profileReducer

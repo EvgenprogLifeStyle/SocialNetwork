@@ -23,7 +23,7 @@ const App = () => {
                 <HeaderContainer/>
                 <Nav/>
                 <div className="content">
-                    <Routes>
+                    <Routes basename={process.env.PUBLIC_URL}>
                         <Route activeClassName='active' path='/profile' element={<ProfileContainer/>}/>
                         <Route activeClassName='active' path='/profile/:userId' element={<ProfileContainer/>}/>
                         <Route activeClassName='active' path='/dialogs' element={<DialogsContainer/>}/>

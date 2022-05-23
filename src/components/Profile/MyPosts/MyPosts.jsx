@@ -8,7 +8,7 @@ import Textarea from "../../../Ui/Textarea/Textarea";
 const maxLengthCreator30 = maxLengthCreator(30)
 
 const MyPosts = (props) => {
-    console.log(props)
+    // console.log(props)
 
 
     const onSubmitPost = (data) => props.addPost(data.post)

@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Input.module.scss'
 const Input = ({input, meta,type, ...props}) => {
-    console.log(meta)
+    // console.log(meta)
 
     const error = meta.touched && meta.error;
     return (

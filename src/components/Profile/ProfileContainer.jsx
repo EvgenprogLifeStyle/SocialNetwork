@@ -1,7 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getStatus, setUserData, setUserProfileData, updateStatus} from "../../Redux/ProfileReducer";
+import {
+    getStatus,
+    savePhoto,
+    saveProfile,
+    setUserData,
+    setUserProfileData,
+    updateStatus
+} from "../../Redux/ProfileReducer";
 import Loader from "../Loader/Loader";
 import {useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../Hoc/WithAuthRedirect";
@@ -10,20 +17,29 @@ import {setLogin} from "../../Redux/AuthReducer";
 
 function ProfileContainer(props) {
     const params = useParams();
-    if (!params.userId) params.userId = props.userId
- 
+   // console.log(params.userId +'<-')
+    let isOwner
+    if (!params.userId) {
 
-
-    // if (!params.userId) params.userId = 2
+        params.userId = props.userId
+    // if(params.userId == props.userId)  isOwner= 1
+    }
 
     useEffect(() => {
         props.setUserData(params.userId)
         props.getStatus(params.userId)
-
-    }, []);
-
+    }, [params.userId]);
+    // console.log(1)
     return <>
-        {props.state !== null ? <Profile  profile={props.state} status={props.status} updateStatus={props.updateStatus}/> : <Loader/>}
+        {props.state !== null
+            ? <Profile
+                isOwner={isOwner}
+                profile={props.state}
+                status={props.status}
+                updateStatus={props.updateStatus}
+                savePhoto={props.savePhoto}
+                saveProfile={props.saveProfile}/>
+            : <Loader/>}
     </>
 }
 
@@ -34,6 +50,6 @@ let mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, {setUserData, getStatus, updateStatus}),
+    connect(mapStateToProps, {setUserData, getStatus, updateStatus,savePhoto,saveProfile}),
     WithAuthRedirect
-)(ProfileContainer)
+)(React.memo(ProfileContainer))
