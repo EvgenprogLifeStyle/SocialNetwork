@@ -1,0 +1,18 @@
+.form__control{
+  display: flex;
+  margin-top: 8px;
+  div{
+    flex: 0 0 40%;
+    font-size: 14px;
+    &:last-child{
+      flex: 1 1 auto;
+    }
+  }
+  
+}.form__top{
+   text-align: right;
+ }
+ 
+.contact__control{
+
+}

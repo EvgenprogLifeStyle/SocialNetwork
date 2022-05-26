@@ -1,43 +1,42 @@
 import React from 'react';
-import s from "../ProfileInfo.module.scss";
+import s from "./ProfileDataForm.module.scss";
 import {Field} from "redux-form";
 import Input from "../../../../Ui/Input/Input";
 
 const ProfileDataForm = ({profile, handleSubmit, error}) => {
-    // console.log(profile)
-    // console.log(error)
 
     return (
         <form onSubmit={handleSubmit}>
-            <button> save</button>
+            <div className={s.form__top}>    <button className='btn'> save</button></div>
+
+
             {error && <div>{error}</div>}
-            <div className={s.profile__name}><b>Full name:</b>
-                <Field component={Input} type="text" name='fullName'
-                /></div>
-            <div>
-                <b>Looking for a job: </b>
-                <Field component="input" type="checkbox" name='lookingForAJob'
-                />
+            <div className={s.form__control}>
+                <div>Full name:</div>
+                <Field component={Input} type="text" name='fullName'/>
             </div>
-
-            <div><b>My professional skills: </b>
-                <Field component={Input} type="text" name='lookingForAJobDescription'
-                />
+            <div className={s.form__control}>
+                <div>Looking for a job:</div>
+                <Field component="input" type="checkbox" name='lookingForAJob'/>
             </div>
-
-            <div className={s.profile__about}><b>About me: </b>
+            <div className={s.form__control}>
+                <div>My professional skills:</div>
+                <Field component={Input} type="text" name='lookingForAJobDescription'/>
+            </div>
+            <div className={s.form__control}>
+                <div>About me:</div>
                 <Field component={Input} type="text" name='aboutMe'/>
             </div>
-
-            <div>
-                <b>Contacts:</b>
+            <div className={s.contact__control}>
+                <div>Contacts:</div>
                 {Object.keys(profile.contacts).map(key =>
-                    <div key={key}><b>{key}:</b>
-                        <Field component={Input}  type="text" name={'contacts.' + key} placeholder={key}/></div>)}
+                    <div className={s.form__control} key={key}>
+                        <div>{key}:</div>
+                        <Field component={Input} type="text" name={'contacts.' + key} placeholder={key}/></div>
+                )}
             </div>
         </form>
     );
 };
-
 
 export default ProfileDataForm;

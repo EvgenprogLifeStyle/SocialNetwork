@@ -7,6 +7,7 @@ const instance = axios.create({
         "API-KEY": '49bc418b-fd7c-4c82-b5f5-ce56b5a10082'
     }
 })
+
 export const usersApi = {
     getUsers: (currentPage, pageSize) =>
         instance.get(`users?page=${currentPage}&count=${pageSize}`)
@@ -21,10 +22,8 @@ export const usersApi = {
 
 export const headerApi = {
     me: () => instance.get(`auth/me`),
-    login: (email, password, rememberMe) => instance.post(`auth/login`, {email, password, rememberMe}),
+    login: (email, password, rememberMe,captcha = null) => instance.post(`auth/login`, {email, password, rememberMe,captcha}),
     logout: () => instance.delete(`auth/login`)
-
-
 }
 
 export const profile = {
@@ -33,7 +32,6 @@ export const profile = {
             .then(response => response.data),
     getStatus: (userId) =>
         instance.get(`profile/status/${userId}`),
-
     updateStatus: (status) =>
         instance.put(`profile/status`, {status}),
     savePhoto: (photoFile) => {
@@ -46,12 +44,8 @@ export const profile = {
         })
     },
     saveProfile: (data) => instance.put(`profile`, data),
-
 }
+
 export const security = {
     captcha:()=>instance.get(`security/get-captcha-url`)
 }
-// export const getFollowApi = (id) =>
-//     instance.pos(`/follow/${id}`)
-//         .then(response => response.data)
-//

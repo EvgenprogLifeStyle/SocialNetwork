@@ -6,8 +6,8 @@ function Message(props) {
         <div className={s.message}>
             <div className={s.message__img}>
                 <img
-                    src="https://shapka-youtube.ru/wp-content/uploads/2021/02/avatarka-dlya-skaypa-dlya-parney.jpg"
-                    alt=""/>
+                    src={props.avatar}
+                    alt={props.name}/>
             </div>
             <div className={s.message__content}>
                 <div className={s.message__top}>

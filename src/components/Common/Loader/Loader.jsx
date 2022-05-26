@@ -1,7 +1,7 @@
 import React from 'react';
-import loaderImg from "../../assets/img/loader_01.svg";
+import loaderImg from "../../../assets/img/loader_02.svg";
 
-function Loader(props) {
+function Loader() {
     return (
         <div className="loader" ><img src={loaderImg} alt="Loading..."/></div>
     );

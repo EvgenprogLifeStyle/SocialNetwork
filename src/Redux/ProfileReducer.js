@@ -70,7 +70,7 @@ const profileReducer = (state = defaultState, action) => {
     }
 }
 
-export const addPostActionCreator = (post) => ({type: ADD_POST, post})
+export const addPost = (post) => ({type: ADD_POST, post})
 export const toggleIsFetchingProfile = (isFetching) => ({type: TOGGLE_IS_FETCHING_PROFILE, isFetching})
 export const setUserProfileData = (userId) => ({type: SET_USER_PROFILE, userId})
 export const setStatus = (text) => ({type: SET_STATUS, text})
@@ -79,6 +79,7 @@ export const saveProfileSuccess = (data) => ({type: SAVE_PROFILE, data})
 
 
 export const setUserData = (userId) => async (dispatch) => {
+    console.log(1)
     dispatch(toggleIsFetchingProfile(true))
     let data = await profile.dataUser(userId)
     dispatch(setUserProfileData(data))
@@ -107,7 +108,7 @@ export const saveProfile = (data) => async (dispatch) => {
     if (response.data.resultCode === 0) {
         dispatch(setUserData(data.userId))
     } else {
-        console.log(response.data.messages[0])
+        // console.log(response.data.messages[0])
         // dispatch(stopSubmit('profile', {"contacts": {"facebook": response.data.messages[0]}}))
         dispatch(stopSubmit('profile', {_error: response.data.messages[0]}))
         return Promise.reject( response.data.messages[0])

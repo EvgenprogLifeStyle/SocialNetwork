@@ -1,17 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
 import {connect} from "react-redux";
+import {setLogin} from "../Redux/AuthReducer";
 
 export const WithAuthRedirect = (Component) => {
-    const Redirect = (props) => {
-        if (!props.isAuth) return <Navigate replace to="/login"/>
-        return <Component  {...props}/>
+    const Redirect = async (props) => {
+
+        // const [loading, setLoading] = useState(false)
+
+        await props.setLogin()
+        // setLoading(true)
+
+        // if (loading) {
+            console.log(props.isAuth)
+            if (!props.isAuth) { return <Navigate replace to="/login"/>}else {
+                return <Component  {...props}/>
+            }
+        // }
     }
 
-    let mapStateAuthToProps = (state) => ({isAuth: state.auth.isAuth})
-
-    let ConnectedAuthRedirect = connect(mapStateAuthToProps)(Redirect)
-
+    const mapStateAuthToProps = (state) => ({isAuth: state.auth.isAuth})
+    const ConnectedAuthRedirect = connect(mapStateAuthToProps, {setLogin})(Redirect)
     return ConnectedAuthRedirect
 }
 

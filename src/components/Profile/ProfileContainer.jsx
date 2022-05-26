@@ -1,35 +1,23 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {
-    getStatus,
-    savePhoto,
-    saveProfile,
-    setUserData,
-    setUserProfileData,
-    updateStatus
-} from "../../Redux/ProfileReducer";
-import Loader from "../Loader/Loader";
+import {getStatus, savePhoto, saveProfile, setUserData, updateStatus} from "../../Redux/ProfileReducer";
+import Loader from "../Common/Loader/Loader";
 import {useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../Hoc/WithAuthRedirect";
 import {compose} from "redux";
-import {setLogin} from "../../Redux/AuthReducer";
 
 function ProfileContainer(props) {
     const params = useParams();
-   // console.log(params.userId +'<-')
-    let isOwner
-    if (!params.userId) {
-
-        params.userId = props.userId
-    // if(params.userId == props.userId)  isOwner= 1
-    }
+let isOwner
+    if (!params.userId) params.userId = props.userId
 
     useEffect(() => {
         props.setUserData(params.userId)
         props.getStatus(params.userId)
     }, [params.userId]);
-    // console.log(1)
+    if(+params.userId != props.userId) isOwner=true
+    console.log(isOwner)
     return <>
         {props.state !== null
             ? <Profile
@@ -50,6 +38,6 @@ let mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, {setUserData, getStatus, updateStatus,savePhoto,saveProfile}),
+    connect(mapStateToProps, {setUserData, getStatus, updateStatus, savePhoto, saveProfile}),
     WithAuthRedirect
 )(React.memo(ProfileContainer))

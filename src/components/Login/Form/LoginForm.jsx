@@ -1,14 +1,20 @@
-import React from 'react';
 import s from "./LoginForm.module.scss";
-import {Field, reduxForm} from "redux-form";
+import {Field} from "redux-form";
 import Input from "../../../Ui/Input/Input";
 import {maxLengthCreator, required} from "../../../Utils/validator";
+import React from "react";
+
 
 const maxLengthCreator30 = maxLengthCreator(30)
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error, captchaImg}) => {
     return (
-        <form className={s.form} onSubmit={props.handleSubmit}>
+        <form className={s.form} onSubmit={handleSubmit}>
+            {error && <div className={s._error}>{error}</div>}
+            {captchaImg && <div><img src={captchaImg} alt="captcha"/></div>}
+            {captchaImg && <Field component={Input} type="text" name='captcha' placeholder="Symbols from image"
+                   validate={[required]}/>  }
+
             <div className={s.form__control}>
                 <Field component={Input} type="text" name='email' placeholder="Login"
                        validate={[required, maxLengthCreator30]}/>
@@ -18,7 +24,7 @@ const LoginForm = (props) => {
                        validate={[required, maxLengthCreator30]}/>
             </div>
             <div className={`${s.form__control} ${s.form__control_checkbox}`}>
-                <Field component={Input} type="checkbox" name='checkbox'/> remember me
+                <Field component="input" type="checkbox" name='rememberMe'/> remember me
             </div>
             <div className={s.form__control}>
                 <button className={`btn ${s.button}`}>Login</button>
@@ -26,11 +32,4 @@ const LoginForm = (props) => {
         </form>
     );
 };
-
-
-const LoginReduxForm = reduxForm({
-    // a unique name for the form
-    form: 'login'
-})(LoginForm)
-
-export default LoginReduxForm;
+export default LoginForm

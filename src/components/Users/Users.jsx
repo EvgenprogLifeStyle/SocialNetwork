@@ -4,13 +4,8 @@ import Pagination from "../Common/Paginaton/Pagination";
 import User from "./User";
 
 function Users(props) {
-    return <div>
-        <Pagination
-            onPageChange={props.onPageChange}
-            currentPage={props.currentPage}
-            pageSize={props.pageSize}
-            totalItemsCount={props.totalUserCount}
-            portionSize={10}/>
+    return <div className={s.users}>
+
 
         <div className={s.users__container}>
             {props.state.map(user =>
@@ -21,6 +16,12 @@ function Users(props) {
                       setFollow={props.setFollow}/>
             )}
         </div>
+        <Pagination
+            onPageChange={props.onPageChange}
+            currentPage={props.currentPage}
+            pageSize={props.pageSize}
+            totalItemsCount={props.totalUserCount}
+            portionSize={10}/>
     </div>
 }
 

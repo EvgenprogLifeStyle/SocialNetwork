@@ -1,9 +1,10 @@
 //.message
 .message {
-
   display: flex;
-  &:not(:last-child){
-    margin-bottom: 20px;}
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 
   //.message__img
   &__img {
@@ -33,8 +34,8 @@
 
   //.message__name
   &__name {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     opacity: 0.6;
   }
 
@@ -47,8 +48,8 @@
 
   //.message__text
   &__text {
-    margin-top: 8px;
-    font-size: 18px;
+    margin-top: 6px;
+    font-size: 15px;
     text-align: left;
     color: #fafafa;
   }

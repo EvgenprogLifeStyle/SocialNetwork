@@ -1,29 +1,49 @@
 .header {
   grid-area: header;
   background-color: #333336;
-  padding: 20px;
 
   //.header__contain
   &__contain {
+    max-width: 1000px;
+    margin: 0px auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 48px;
+    padding: 0px 20px;
   }
 
   img {
-    max-width: 36px;
+    max-width: 76px;
   }
+}
 
-  //.header__login
-  &__login {
+.login {
+  display: flex;
+  flex-direction: column;
+  //.login__name
+  &__name {
     color: #cecece;
     text-decoration: none;
-    transition: 0.3s;
-    cursor: pointer;
+  }
 
-    &:hover {
-      color: yellow;
+  //.login__exit
+  &__exit {
+    text-align: right;
+
+    button {
+      background: transparent;
+      color: #8c8c8c;
+      border: 0;
+      text-align: end;
+      font-size: 12px;
+      text-decoration: underline;
+      transition: 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        color: #d5d5ce;
+      }
     }
-
   }
 }

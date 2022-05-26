@@ -120,7 +120,12 @@ export const toggleInProgress = (result) => ({type: IN_PROGRESS, result})
 export const getUsers = (currentPage, pageSize) => {
     return async (dispatch) => {
         dispatch(toggleIsFetching(true))
-        let data = await usersApi.getUsers(currentPage, pageSize)
+        let data
+        try {
+            data = await usersApi.getUsers(currentPage, pageSize)
+        } catch (error) {
+            console.log(error)
+        }
         dispatch(toggleIsFetching(false))
         dispatch(setUsers(data.items))
         dispatch(setTotalUserCount(data.totalCount))

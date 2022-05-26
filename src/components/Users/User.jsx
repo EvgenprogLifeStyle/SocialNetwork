@@ -13,7 +13,7 @@ const User = ({user, inProgress, setUnFollow, setFollow}) => {
                 </Link></div>
             <div className={s.users__body}>
                 <div className={s.users__name}>{user.name}</div>
-                <div className={s.users__status}>{user.status}</div>
+                {/*<div className={s.users__status}>{user.status}</div>*/}
                 {/*<div className={s.users__location}>{user.location.country},{user.location.city}</div>*/}
                 {user.followed === true
                     ? <button disabled={inProgress} onClick={() => setUnFollow(user.id)}

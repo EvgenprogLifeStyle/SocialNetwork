@@ -1,27 +1,43 @@
 .nav {
   grid-area: nav;
-  background-color:#222226 ;
-  padding: 20px;
+  background-color: #222226;
+  padding: 20px 20px 20px 0;
+  flex: 0 0 160px
 }
 
 .item {
   &:not(:last-child) {
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
   a {
-    color:  #777;
+    color: #777;
     text-decoration: none;
     transition: all 0.3s ease 0s;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    span {
+      flex: 0 0 18px;
+      display: inline-flex;
+      margin-right: 10px;
+      img {
+
+        max-width: 100%;
+        height: auto
+      }
+
+    }
+
     @media (any-hover: hover) {
       &:hover {
         color: #ccc;
       }
     }
-
-
   }
+
   a.activeL {
-    color: rgb(255, 240, 173);
+    color: rgb(204, 201, 190);
   }
 }

@@ -1,8 +1,6 @@
 .form__control {
   width: 100%;
-
-
-
+  display: inline-flex;
 
   textarea {
     width: 100%;
@@ -11,20 +9,15 @@
     font-size: 14px;
     resize: none;
     overflow: hidden;
-
-
     background: transparent;
     border-radius: 6px;
     border: 1px solid #666666;
     min-height: 36px;
     max-height: 200px;
-
     word-wrap: break-word;
     appearance: none;
-
     padding: 8px 12px;
     color: #c9c9c9;
-
     transition: 0.2s;
     cursor: pointer;
 

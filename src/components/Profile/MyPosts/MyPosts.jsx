@@ -8,28 +8,19 @@ import Textarea from "../../../Ui/Textarea/Textarea";
 const maxLengthCreator30 = maxLengthCreator(30)
 
 const MyPosts = (props) => {
-    // console.log(props)
-
-
     const onSubmitPost = (data) => props.addPost(data.post)
 
-
-    return (
-        <div>
-            <div className={s.title}> my posts</div>
-            <PostReduxForm {...props} onSubmit={onSubmitPost}/>
-            <div className={s.subtitle}>new post</div>
-            <div className={s.items}>
-                {props.state.post.map((el, idx) => <Post key={idx} id={el.id} text={el.text} like={el.countLike}/>)}
-            </div>
+    return <div>
+        <div className={s.title}> my posts</div>
+        <PostReduxForm {...props} onSubmit={onSubmitPost}/>
+        <div className={s.subtitle}>new post</div>
+        <div className={s.items}>
+            {props.state.post.map((el, idx) => <Post key={idx} id={el.id} text={el.text} like={el.countLike}/>)}
         </div>
-    );
+    </div>
 }
 
 const FormPostAdd = (props) => {
-
-
-    // const required = value => (value   ? undefined : 'Required')
     return (
         <form onSubmit={props.handleSubmit} className={s.form}>
             <Field component={Textarea}
@@ -47,4 +38,4 @@ const FormPostAdd = (props) => {
 
 const PostReduxForm = reduxForm({form: 'post'})(FormPostAdd)
 
-export default React.memo(MyPosts);
+export default MyPosts;

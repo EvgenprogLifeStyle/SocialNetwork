@@ -1,17 +1,23 @@
 .users {
-
+  height: calc(100vh - 88px);
+overflow-y: auto;
+  overflow-x: hidden;
+  background: #333336;
   &__container {
-    padding: 20px;
+    padding: 20px 20px 0;
     display: flex;
     flex-wrap: wrap;
     margin: 0px -10px;
+
+
+
   }
 
   //.user__item
   &__item {
-    flex: 0 1 calc(20% - 20px);
-    margin: 0px 10px 20px;
-
+    flex: 1 1 calc(20% - 20px);
+    margin: 0px 8px 20px;
+    overflow: hidden;
   }
 
   //.user__img
@@ -22,11 +28,11 @@
     border-radius: 50%;
     overflow: hidden;
     height: 133px;
+
     img {
       max-width: 100%;
       object-fit: cover;
     }
-
   }
 
   //.user__body
@@ -38,7 +44,11 @@
   &__name {
     font-weight: 500;
     color: #dadada;
-    font-size: 16px;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
   }
 
   //.user__status
@@ -55,7 +65,5 @@
     margin-top: 4px;
     margin-bottom: 20px;
   }
-
-
 }
 

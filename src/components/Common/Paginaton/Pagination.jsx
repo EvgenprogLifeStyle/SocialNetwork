@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import s from './Pagination.module.scss'
+import arrowIcon from './../../../assets/img/arrow.svg'
 
 function Pagination({totalItemsCount, pageSize, onPageChange, currentPage, portionSize}) {
     let pagesCount, pages
-
 
     pagesCount = Math.ceil(totalItemsCount / pageSize)
     pages = []
@@ -19,7 +19,9 @@ function Pagination({totalItemsCount, pageSize, onPageChange, currentPage, porti
 
     return <div className={s.pagination}>
         {portionNumber > 1 &&
-            <button onClick={() => setPortionNumber(portionNumber - 1)}>Left</button>
+            <button className={`${s.arrow} ${s.arrow__left}`} onClick={() => setPortionNumber(portionNumber - 1)}>
+                <img src={arrowIcon} alt="Left"/>
+            </button>
         }
         {pages
             .filter(p => p >= leftPortionNumber && p <= rightPortionNumber)
@@ -30,7 +32,9 @@ function Pagination({totalItemsCount, pageSize, onPageChange, currentPage, porti
                     </span>
             )}
         {portionsCount > portionNumber &&
-            <button onClick={() => setPortionNumber(portionNumber + 1)}>Rigth</button>
+            <button className={`${s.arrow} ${s.arrow__right}`} onClick={() => setPortionNumber(portionNumber + 1)}>
+                <img src={arrowIcon} alt="Right"/>
+            </button>
         }
     </div>
 }
